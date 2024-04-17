@@ -1,0 +1,11 @@
+[Unit]
+Description=ROT13 demo service
+After=awg-quick@awg0.service
+
+[Service]
+Type=simple
+Restart=always
+ExecStart=/usr/bin/awg-exporter
+
+[Install]
+WantedBy=multi-user.target
