@@ -121,6 +121,7 @@ class AwgShowWrapper:
         """
         quantity = binary_units.split(' ')[0:2]
         units = {
+            "B":   1,
             "KiB": 1024,
             "MiB": 1024 ** 2,
             "GiB": 1024 ** 3,
@@ -193,7 +194,7 @@ class AwgShowWrapper:
 
 class Exporter():
     """
-    A Prometheus exporter for collecting Amnezia WireGuard client connection metrics.
+    A Prometheus exporter for collecting Amnezia WG client connection metrics.
 
     This class initializes the exporter, updates metrics periodically,
     and optionally exposes them via an HTTP server or writes them to a file.
