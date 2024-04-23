@@ -1,8 +1,9 @@
 ##############################################################################
 #=======================| Wal-g exporter Builder Image |=====================#
 ##############################################################################
-FROM python:bookworm AS builder
+FROM python:alpine AS builder
 ARG DEBIAN_FRONTEND=noninteractive
+RUN apk update && apk add binutils
 RUN pip3 install python-decouple prometheus-client pyinstaller
 COPY . /exporter
 WORKDIR /exporter

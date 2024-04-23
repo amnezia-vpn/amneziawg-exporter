@@ -1,3 +1,5 @@
+VERSION := 0.9.0
+
 all:
 
 build:
@@ -7,4 +9,4 @@ build:
 	docker rm $(_CONTANER_ID)
 
 docker:
-	docker build -t ghcr.io/shipilovds/awg-exporter --target exporter .
+	docker build -t ghcr.io/shipilovds/awg-exporter:$(VERSION) --target exporter .
