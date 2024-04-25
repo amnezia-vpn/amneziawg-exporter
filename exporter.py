@@ -313,6 +313,7 @@ class Exporter():
         Starts the main loop for updating metrics periodically.
         """
         self.log.info('Start main loop')
+        self.log.info(f"Ops mode: {self.config['ops_mode']}")
         signal.signal(signal.SIGTERM, self.sigterm_handler)
         signal.signal(signal.SIGINT, self.sigint_handler)
         if self.config['ops_mode'] == 'http':
@@ -321,12 +322,11 @@ class Exporter():
         while True:
             try:
                 self.update_metrics()
-                if self.config['ops_mode'] == 'oneshot':
-                    self.log.info("\"Oneshot\" type of run")
-                    # write metrics to file and exit
+                if self.config['ops_mode'] != 'http':
                     self.write_metrics_to_file(self.config['metrics_file'])
-                    self.log.info("Exiting after successful metrics fetch...")
-                    break
+                    if self.config['ops_mode'] == 'oneshot':
+                        self.log.info("Exiting after successful metrics fetch...")
+                        break
                 time.sleep(self.config['scrape_interval'])
             except Exception as e:
                 self.log.error(f"{str(e)}")
