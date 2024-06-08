@@ -235,7 +235,7 @@ class Exporter():
         self.status = Gauge('awg_status',
                             'Exporter status. 1 - OK, 0 - not OK',
                             registry=self.registry)
-        self.log.info('awg exporter initialized')
+        self.log.info('AmneziaWG exporter initialized')
 
     def sigterm_handler(self, sig, frame):
         """
@@ -338,7 +338,7 @@ class Exporter():
 
 if __name__ == '__main__':
     log = MyLogger("Main").logger
-    log.info('Starting awg exporter')
+    log.info('Starting AmneziaWG exporter')
     config = Decouwrapper()
     exporter_config = {
         'scrape_interval': config('AWG_EXPORTER_SCRAPE_INTERVAL', default=60),

@@ -1,11 +1,11 @@
 [Unit]
-Description=ROT13 demo service
+Description=AmneziaWG exporter
 After=awg-quick@awg0.service
 
 [Service]
 Type=simple
 Restart=always
-ExecStart=/usr/bin/awg-exporter
+ExecStart=/usr/bin/amneziawg-exporter
 
 [Install]
 WantedBy=multi-user.target

@@ -1,1 +1,1 @@
-# amnezia-exporter
+# AmneziaWG exporter

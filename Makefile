@@ -1,12 +1,12 @@
-VERSION := 0.9.2
+.PHONY: build docker
+VERSION := 0.9.3
 
-all:
 
 build:
-	docker build -t awg-builder --target builder .
-	$(eval _CONTANER_ID := $(shell docker create amnezia-exporter))
-	docker cp $(_CONTANER_ID):/exporter/dist/awg-exporter .
+	docker build -t amneziawg-exporter-builder --target builder .
+	$(eval _CONTANER_ID := $(shell docker create amneziawg-exporter-builder))
+	docker cp $(_CONTANER_ID):/exporter/dist/amneziawg-exporter .
 	docker rm $(_CONTANER_ID)
 
 docker:
-	docker build -t ghcr.io/shipilovds/awg-exporter:$(VERSION) --target exporter .
+	docker build -t ghcr.io/shipilovds/amneziawg-exporter:$(VERSION) --target exporter .
