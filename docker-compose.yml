@@ -1,6 +1,14 @@
 services:
   amneziawg-exporter:
-    image: ghcr.io/shipilovds/amneziawg-exporter:0.9.0
+    image: ghcr.io/shipilovds/amneziawg-exporter:1.0.0
     container_name: amneziawg-exporter
-    privileged: true
+    cap_add:
+      - NET_ADMIN
+    security_opt:
+      - no-new-privileges=true
     network_mode: host
+    environment:
+      AWG_EXPORTER_OPS_MODE: metricsfile
+    volumes:
+      - /usr/bin/awg:/usr/bin/awg
+      - /tmp/prometheus/:/tmp/prometheus/
