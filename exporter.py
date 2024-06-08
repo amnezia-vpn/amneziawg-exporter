@@ -296,9 +296,10 @@ class Exporter():
             if not parsed_data:
                 self.status.set(0)
                 return
-            clients_table = self.read_clients_table(self.config['clients_table_file'])
-            if not clients_table:
-                self.log.warning('ClientsTables was not found. Will not identify clients by names.')
+            if not bool(self.config.clients_table_enabled):
+                clients_table = []
+            else:
+                clients_table = self.read_clients_table(self.config['clients_table_file'])
             for peer in parsed_data:
                 client_name = next((client['userData']['clientName'] for client in clients_table if client['clientId'] == peer['peer']), 'unidentified')
                 self.sent_bytes_metric.labels(peer['peer'], client_name).set(peer.get('sent', 0))
@@ -319,6 +320,8 @@ class Exporter():
         if self.config['ops_mode'] == 'http':
             # Start up the server to expose the metrics.
             start_http_server(self.config['http_port'], registry=self.registry)
+        if not bool(self.config.clients_table_enabled):
+            self.log.info('Clients Table option is disabled. All clients will be identified as \"unidentified\"')
         while True:
             try:
                 self.update_metrics()
@@ -342,6 +345,7 @@ if __name__ == '__main__':
         'http_port': config('AWG_EXPORTER_HTTP_PORT', default=9351),
         'metrics_file': config('AWG_EXPORTER_METRICS_FILE', default='/tmp/prometheus/awg.prom'),
         'ops_mode': config('AWG_EXPORTER_OPS_MODE', default='http'),
+        'clients_table_enabled': config('AWG_EXPORTER_CLIENTS_TABLE_ENABLED', default='false'),
         'clients_table_file': config('AWG_EXPORTER_CLIENTS_TABLE_FILE', default='./clientsTable1'),
         'awg_executable': config('AWG_EXPORTER_AWG_SHOW_EXEC', default='awg show')
     }
