@@ -296,7 +296,7 @@ class Exporter():
             if not parsed_data:
                 self.status.set(0)
                 return
-            if not bool(self.config.clients_table_enabled):
+            if not bool(self.config['clients_table_enabled']):
                 clients_table = []
             else:
                 clients_table = self.read_clients_table(self.config['clients_table_file'])
@@ -320,7 +320,7 @@ class Exporter():
         if self.config['ops_mode'] == 'http':
             # Start up the server to expose the metrics.
             start_http_server(self.config['http_port'], registry=self.registry)
-        if not bool(self.config.clients_table_enabled):
+        if not bool(self.config['clients_table_enabled']):
             self.log.info('Clients Table option is disabled. All clients will be identified as \"unidentified\"')
         while True:
             try:
