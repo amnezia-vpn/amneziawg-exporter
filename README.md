@@ -46,7 +46,26 @@ The following environment variables can be used to configure amneziawg-exporter.
 > [!NOTE]
 > Every metric receives a `peer` label to identify the AmneziaWG peer, and `client_name` to identify the client if client table is enabled.
 
+## Docker image
+
+The Docker image is built using the [Dockerfile](Dockerfile) available in this repository. You can easily obtain it from [DockerHub](https://hub.docker.com/r/amneziavpn/amneziawg-exporter) by running the command `docker pull amneziavpn/amneziawg-exporter.`
+
+
 ## Example usage
+
+### Build binary
+
+```sh
+make build
+```
+
+### Build docker image
+
+```sh
+make docker
+```
+
+### Run in docker
 
 You can use example [docker-compose.yml](docker-compose.yml) with Docker Compose v2 to run AmneziaWG exporter:
 
@@ -56,5 +75,5 @@ You can use example [docker-compose.yml](docker-compose.yml) with Docker Compose
  ✔ Container amneziawg-exporter  Started                                                                                                                  0.2s 
 # docker compose ps
 NAME                 IMAGE                                          COMMAND                         SERVICE              CREATED          STATUS          PORTS
-amneziawg-exporter   ghcr.io/amnezia-vpn/amneziawg-exporter:2.0.0   "/usr/bin/amneziawg-exporter"   amneziawg-exporter   23 seconds ago   Up 23 seconds
+amneziawg-exporter   amneziavpn/amneziawg-exporter:2.0.0            "/usr/bin/amneziawg-exporter"   amneziawg-exporter   23 seconds ago   Up 23 seconds
 ```
