@@ -1,6 +1,6 @@
 .PHONY: build docker docker_build docker_retag docker_login docker_push
 
-VERSION            := 1.0.1
+VERSION            := 2.0.0
 PROJECT_NAME       ?= amneziawg-exporter
 DOCKER_BUILDKIT    ?= 1
 DOCKER_REGISTRY    ?= ghcr.io
@@ -21,7 +21,7 @@ endif
 build: $(PROJECT_NAME)
 
 $(PROJECT_NAME):
-	#docker build . -t $(PROJECT_NAME)-builder --target builder
+	docker build . -t $(PROJECT_NAME)-builder --target builder
 	$(eval _CONTANER_ID := $(shell docker create $(PROJECT_NAME)-builder))
 	docker cp $(_CONTANER_ID):/exporter/dist/$(PROJECT_NAME) .
 	docker rm $(_CONTANER_ID)
