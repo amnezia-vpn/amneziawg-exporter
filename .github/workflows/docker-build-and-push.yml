@@ -27,6 +27,7 @@ jobs:
           make docker
 
         env:
-          DOCKER_IMAGE: ghcr.io/${{ github.repository }}
-          DOCKER_USER: ${{ github.actor }}
-          DOCKER_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+          DOCKER_REGISTRY:
+          DOCKER_IMAGE: amneziavpn/amneziawg-exporter
+          DOCKER_USER: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_TOKEN }}

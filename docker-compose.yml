@@ -1,6 +1,6 @@
 services:
   amneziawg-exporter:
-    image: ghcr.io/shipilovds/amneziawg-exporter:1.0.0
+    image: amneziavpn/amneziawg-exporter:2.0.0
     container_name: amneziawg-exporter
     cap_add:
       - NET_ADMIN
