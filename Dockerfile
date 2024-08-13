@@ -4,9 +4,9 @@ RUN pip3 install \
     prometheus_client==0.20.0 \
     python-decouple==3.8 \
     requests==2.32.3
-COPY ./exporter.py /
+COPY --chmod=755 ./exporter.py /
 COPY ./Dockerfile /
-CMD ["/exorter.py"]
+CMD ["/exporter.py"]
 ARG VERSION
 LABEL org.opencontainers.image.version=$VERSION
 LABEL org.opencontainers.image.source=https://github.com/amnezia-vpn/amneziawg-exporter

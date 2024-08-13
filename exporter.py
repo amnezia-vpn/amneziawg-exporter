@@ -357,6 +357,8 @@ if __name__ == '__main__':
     }
     log.info('Exporter config:')
     for key, value in exporter_config.items():
+        if key == 'metrics_file' and exporter_config['ops_mode'] != 'metricsfile':
+            continue
         log.info(f"--> {key}: {value}")
     exporter = Exporter(exporter_config)
     exporter.main_loop()
