@@ -1,6 +1,7 @@
 services:
   amneziawg-exporter:
-    image: amneziavpn/amneziawg-exporter:2.0.0
+    image: amneziavpn/amneziawg-exporter:latest
+    build: .
     container_name: amneziawg-exporter
     cap_add:
       - NET_ADMIN
