@@ -253,6 +253,7 @@ class Exporter:
             peers = AwgShowWrapper.parse(awg_show_result)
             if not peers:
                 self.status.set(0)
+                self.current_online_metric.set(0)
                 return
             current_online = 0
             dau = 0

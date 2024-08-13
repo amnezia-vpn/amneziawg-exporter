@@ -1,3 +1,8 @@
+![License](https://img.shields.io/github/license/amnezia-vpn/amneziawg-exporter)
+![Docker Latest Version](https://img.shields.io/docker/v/amneziavpn/amneziawg-exporter)
+![Docker Image Size](https://img.shields.io/docker/image-size/amneziavpn/amneziawg-exporter)
+![Docker Pulls](https://img.shields.io/docker/pulls/amneziavpn/amneziawg-exporter)
+
 # AmneziaWG exporter
 
 amneziawg-exporter is a Prometheus exporter for gathering AmneziaWG client connection metrics.
@@ -43,29 +48,12 @@ The following environment variables can be used to configure amneziawg-exporter.
 | awg_dau                              |                      | Daily active users.                                                         |
 | awg_status                           |                      | Exporter status. 1 - OK, 0 - not OK                                         |
 
-> [!NOTE]
-> Every metric receives a `peer` label to identify the AmneziaWG peer, and `client_name` to identify the client if client table is enabled.
-
 ## Docker image
 
 The Docker image is built using the [Dockerfile](Dockerfile) available in this repository. You can easily obtain it from [DockerHub](https://hub.docker.com/r/amneziavpn/amneziawg-exporter) by running the command `docker pull amneziavpn/amneziawg-exporter.`
 
 
 ## Example usage
-
-### Build binary
-
-```sh
-make build
-```
-
-### Build docker image
-
-```sh
-make docker
-```
-
-### Run in docker
 
 You can use example [docker-compose.yml](docker-compose.yml) with Docker Compose v2 to run AmneziaWG exporter:
 
@@ -75,5 +63,8 @@ You can use example [docker-compose.yml](docker-compose.yml) with Docker Compose
  ✔ Container amneziawg-exporter  Started                                                                                                                  0.2s 
 # docker compose ps
 NAME                 IMAGE                                          COMMAND                         SERVICE              CREATED          STATUS          PORTS
-amneziawg-exporter   amneziavpn/amneziawg-exporter:2.0.0            "/usr/bin/amneziawg-exporter"   amneziawg-exporter   23 seconds ago   Up 23 seconds
+amneziawg-exporter   amneziavpn/amneziawg-exporter:2.1.0            "/usr/bin/amneziawg-exporter"   amneziawg-exporter   23 seconds ago   Up 23 seconds
 ```
+
+> [!TIP]
+> Run `docker compose build` before, if you want to build image by yourself.

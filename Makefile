@@ -1,32 +1,19 @@
-.PHONY: build docker docker_build docker_retag docker_login docker_push
+.PHONY: all ci docker_build docker_retag docker_login docker_push
 
-VERSION            := 2.0.0
-PROJECT_NAME       ?= amneziawg-exporter
+VERSION            := 2.1.0
+PROJECT_NAME       ?= amneziavpn/amneziawg-exporter
 DOCKER_BUILDKIT    ?= 1
-DOCKER_REGISTRY    ?= ghcr.io
+DOCKER_REGISTRY    ?= docker.io
 DOCKER_USER        ?= none
 DOCKER_PASSWORD    ?= none
 DOCKER_IMAGE       ?= $(PROJECT_NAME)
 DOCKER_TAG         ?= latest
 
 
-ifeq ($(DOCKER_IMAGE), $(PROJECT_NAME))
-    DOCKER_TARGETS := docker_build
-else
-	DOCKER_TAG     := $(VERSION)
-    DOCKER_TARGETS := docker_build docker_push
-endif
+all: docker_build
 
-
-build: $(PROJECT_NAME)
-
-$(PROJECT_NAME):
-	docker build . -t $(PROJECT_NAME)-builder --target builder
-	$(eval _CONTANER_ID := $(shell docker create $(PROJECT_NAME)-builder))
-	docker cp $(_CONTANER_ID):/exporter/dist/$(PROJECT_NAME) .
-	docker rm $(_CONTANER_ID)
-
-docker: $(DOCKER_TARGETS)
+ci: DOCKER_TAG=$(VERSION)
+ci: docker_build docker_push
 
 docker_build:
 	docker build . -t $(DOCKER_IMAGE):$(DOCKER_TAG) --target exporter --build-arg VERSION=$(VERSION)
