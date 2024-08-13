@@ -48,9 +48,6 @@ The following environment variables can be used to configure amneziawg-exporter.
 | awg_dau                              |                      | Daily active users.                                                         |
 | awg_status                           |                      | Exporter status. 1 - OK, 0 - not OK                                         |
 
-> [!NOTE]
-> Every metric receives a `peer` label to identify the AmneziaWG peer, and `client_name` to identify the client if client table is enabled.
-
 ## Docker image
 
 The Docker image is built using the [Dockerfile](Dockerfile) available in this repository. You can easily obtain it from [DockerHub](https://hub.docker.com/r/amneziavpn/amneziawg-exporter) by running the command `docker pull amneziavpn/amneziawg-exporter.`
@@ -69,4 +66,5 @@ NAME                 IMAGE                                          COMMAND     
 amneziawg-exporter   amneziavpn/amneziawg-exporter:2.1.0            "/usr/bin/amneziawg-exporter"   amneziawg-exporter   23 seconds ago   Up 23 seconds
 ```
 
+> [!TIP]
 > Run `docker compose build` before, if you want to build image by yourself.
