@@ -1,4 +1,4 @@
-FROM python:alpine as exporter
+FROM python:3.12.5-bookworm AS exporter
 ARG DEBIAN_FRONTEND=noninteractive
 RUN pip3 install \
     prometheus_client==0.20.0 \

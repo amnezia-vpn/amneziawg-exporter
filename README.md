@@ -5,7 +5,7 @@
 
 # AmneziaWG exporter
 
-amneziawg-exporter is a Prometheus exporter for gathering AmneziaWG client connection metrics.
+AmneziaWG exporter is a Prometheus exporter for gathering AmneziaWG client connection metrics.
 
 ## Features and limitations
 
@@ -63,7 +63,7 @@ You can use example [docker-compose.yml](docker-compose.yml) with Docker Compose
  ✔ Container amneziawg-exporter  Started                                                                                                                  0.2s 
 # docker compose ps
 NAME                 IMAGE                                          COMMAND                         SERVICE              CREATED          STATUS          PORTS
-amneziawg-exporter   amneziavpn/amneziawg-exporter:2.1.0            "/usr/bin/amneziawg-exporter"   amneziawg-exporter   23 seconds ago   Up 23 seconds
+amneziawg-exporter   amneziavpn/amneziawg-exporter:latest           "/usr/bin/amneziawg-exporter"   amneziawg-exporter   23 seconds ago   Up 23 seconds
 ```
 
 > [!TIP]
