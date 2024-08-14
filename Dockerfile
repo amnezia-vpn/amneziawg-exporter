@@ -1,11 +1,10 @@
-FROM python:3.12.5-bookworm AS exporter
+FROM python:3.12.5-slim-bookworm AS exporter
 ARG DEBIAN_FRONTEND=noninteractive
-RUN pip3 install \
+RUN pip3 install --no-cache-dir \
     prometheus_client==0.20.0 \
     python-decouple==3.8 \
     requests==2.32.3
-COPY --chmod=755 ./exporter.py /
-COPY ./Dockerfile /
+COPY --chmod=755 ./exporter.py ./Dockerfile /
 CMD ["/exporter.py"]
 ARG VERSION
 LABEL org.opencontainers.image.version=$VERSION
