@@ -1,0 +1,519 @@
+#!/bin/bash
+
+echo "interface: awg0
+  public key: QfggnzWPB4q5dacNvMV2lgvtZojdDofgjAtqdJrFtQc=
+  private key: (hidden)
+  listening port: 38696
+  jc: 5
+  jmin: 50
+  jmax: 1000
+  s1: 17
+  s2: 40
+  h1: 2075305242
+  h2: 365899635
+  h3: 1910657479
+  h4: 276453630
+
+peer: 51C43aslzaXLdFSc774J6d+fc43lHu9KxKCykRA55Bc=
+  preshared key: (hidden)
+  endpoint: 188.162.229.180:29957
+  allowed ips: 10.8.0.124/32
+  latest handshake: 18 minutes, 58 seconds ago
+  transfer: 3.32 KiB received, 3.18 KiB sent
+
+peer: /vT1uafSiFrK9p53Z+wbq2Q8GJSXfvp9WQzTAAOy6g0=
+  preshared key: (hidden)
+  endpoint: 188.162.229.180:61832
+  allowed ips: 10.8.0.101/32
+  latest handshake: 4 days, 16 hours, 5 minutes, 1 second ago
+  transfer: 1.88 KiB received, 57.73 KiB sent
+
+peer: E1m+rHvGxMSVVuIzf5U+J7oMx5nY80gCqKsSWRZD5gc=
+  preshared key: (hidden)
+  endpoint: 37.195.19.52:45475
+  allowed ips: 10.8.0.88/32
+  latest handshake: 13 days, 17 hours, 14 minutes ago
+  transfer: 484 B received, 56.01 KiB sent
+
+peer: 6suw6t07ZiuI4ZzLjdVo9E5snWAhpGMGsd/eWFPFq0A=
+  preshared key: (hidden)
+  endpoint: 37.195.19.52:36111
+  allowed ips: 10.8.0.87/32
+  latest handshake: 13 days, 17 hours, 15 minutes, 12 seconds ago
+  transfer: 676 B received, 756 B sent
+
+peer: LKcPW98k5KCX0cAaxzbsR1mTR1GFCnIxk7eBltKbtFE=
+  preshared key: (hidden)
+  endpoint: 37.195.19.52:60356
+  allowed ips: 10.8.0.86/32
+  latest handshake: 13 days, 17 hours, 15 minutes, 36 seconds ago
+  transfer: 484 B received, 53.04 KiB sent
+
+peer: lsUPnY/9VkBzD4/hdHHR0aidI9laBp2nUCZb11RGfG0=
+  preshared key: (hidden)
+  endpoint: 37.195.19.52:43533
+  allowed ips: 10.8.0.85/32
+  latest handshake: 13 days, 17 hours, 16 minutes, 42 seconds ago
+  transfer: 644 B received, 57.09 KiB sent
+
+peer: 0Wx3lCWTyJMpBmLPib+MggAD+lSfRmZnB9PmfYtTSnU=
+  preshared key: (hidden)
+  endpoint: 37.195.19.52:54283
+  allowed ips: 10.8.0.84/32
+  latest handshake: 13 days, 17 hours, 16 minutes, 59 seconds ago
+  transfer: 888 B received, 13.60 KiB sent
+
+peer: SujnpCVS4ZRT4dqoJNT7Wf6i+uhAJjTOLqmiRVd9wlc=
+  preshared key: (hidden)
+  endpoint: 37.195.19.52:49217
+  allowed ips: 10.8.0.80/32
+  latest handshake: 13 days, 17 hours, 17 minutes, 52 seconds ago
+  transfer: 23.01 KiB received, 91.43 KiB sent
+
+peer: uALmnLNePFi7b3sRDfi3s6tkOToVCUWyTKoFs1L6OWc=
+  preshared key: (hidden)
+  endpoint: 37.195.19.52:59618
+  allowed ips: 10.8.0.79/32
+  latest handshake: 14 days, 6 hours, 36 minutes, 45 seconds ago
+  transfer: 420 B received, 404 B sent
+
+peer: d6fmw/fym7ai8ha8+xp3yzs8w2a5si3seev2urez384=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.2/32
+
+peer: 0z09b/lfku1f9c26+ugulp8sfzq8jipoteb5j0k4dlk=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.3/32
+
+peer: zq4l8/zyuma2x88w+p1nvpp54qcgr8073ubyx37ijm0=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.5/32
+
+peer: fu3yg/1m5kmgnirx+x171yxr3xve9nldoqkcmig1exk=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.6/32
+
+peer: 7i5vh/vqdu1zmoa9+nqdmzycpayelva0cg3wi1qfmlo=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.7/32
+
+peer: okv3l/kiroqudxly+t8zlf9ur8ccqc8o0clzqlkj938=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.8/32
+
+peer: pwxwi/d0ois9u0yg+naztngp6d1lh18hji2bz2jdc1s=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.11/32
+
+peer: 7SsscvigQyVquY3DkXESE/0V8WRDeorjx/wwPF3zDwQ=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.13/32
+
+peer: T/I1rQDffzV6G1+mGXOyZ2xa7WVQVmnShNSgvWxIaj8=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.14/32
+
+peer: x0BZqTFuc5ZlQI5NPA1tgA8uvBhM3gx91OFulPsMoAM=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.15/32
+
+peer: e6iQF1crP3hiYFK3dOrvUbaYAXXpVJEUaAjM8M0b/Gs=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.16/32
+
+peer: lMnE+2teFWC+ATdBNAxqEkeS/N1q4m1IKqobftFjWDI=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.17/32
+
+peer: 1khuuZhDGchcXYd6bvbcmSR/06LM+l0YyZoNt6Y5Sjw=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.18/32
+
+peer: bYgoSZ/ie6+igY78aIuoYKNbVJX2HawZD9HRYEDvWj4=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.19/32
+
+peer: tsxGF7jh3F3t/eT/QJFtowgQBkPNOjGJ1hd5HwKRjy8=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.20/32
+
+peer: 2YUujFyOPNTlR+pCzxznJqz3BK4F3Fom1z0xtvVQfFM=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.21/32
+
+peer: GPbu9IBhv7TmN1rnOCLvTVfIxT3Sq3Fh5D8jrr8zk0g=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.22/32
+
+peer: d6z08VdMFiidXIL8C2eesKpkW6cQb18rX5rhVPskdDY=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.23/32
+
+peer: JGMLS1k0Clk7bMdRE7CtNBjhU6Z9AZCGBkJevVN4glw=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.24/32
+
+peer: xbprGDeseqS2Wk2Wnw+PGbD+Km59VhODlDqHi2GhTmY=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.25/32
+
+peer: Q8bysgym+M7vVzKJiDPokbF1jDGSdQMiI9zunROOjyE=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.26/32
+
+peer: 9rdjklTugb30E4OHQ/+RvNI/FDQQypUEWkme1EkuTH4=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.27/32
+
+peer: 8iw+KD22a8MLThybJmS/MQjRiXynhynYqOyaqCs1G28=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.28/32
+
+peer: Srm0BjCvLlLbxCWRNrqyngFrJXFeCsDjKp5cV6OgJmA=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.29/32
+
+peer: pW/nhp0AxeOE6ir/zarhcwKVjfAlcVrRoTT6yUafDW8=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.30/32
+
+peer: Cy0kZQMnJ+/Xc7Ww601lXaVCgb3cgYvMUgpI1Yvx0mE=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.31/32
+
+peer: Jn1uNH/DZMMj5mY0Su2fs9JQ2lpjsy6ZxkNu8sVL7FY=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.32/32
+
+peer: UBFx+J+NRBsmYcrmTUl54nyLSHuAtE/B3ml3CI6YhTc=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.33/32
+
+peer: WFBDjnIRSSwFqmkLbr5j6kB0NNkM3at7KHMVAcF8thA=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.34/32
+
+peer: I8RgIRM9Z96oXZs4Y+KJGpPCoo/sVvU0JxpRL/qpwB8=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.35/32
+
+peer: spXTmAOQmLgCqOjji+F1XJxFXrItOWFvHMJNiFvJiRY=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.36/32
+
+peer: +IspR7IQ0/6JbobSiru2U/AYqScPg2dMOyF4Dbk+0ko=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.37/32
+
+peer: Xsa3UpxQYRDTWLLWC8w+OunyOnTl4Zu3AeuJ+CF+qDs=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.38/32
+
+peer: jzte8c+9zZzP5L9gdMErj83x6PmQTsmfHQ5ySia92Qg=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.39/32
+
+peer: pmru0jm//3eFgj/a4vSfeKnH1ntUeMv9BIvXPcob9j8=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.40/32
+
+peer: LOhg06qKYxVVrNSyA9yWYda1wB1YyrvPOtLYjT5g43k=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.41/32
+
+peer: 87wTs6DOF/bw7JVOEkKCTdCaaaOTdRkB98QRrueOxgM=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.42/32
+
+peer: BetlpZMGNGUt6CgVhlvCZMbrlvcN1CkwVVjBz62RIR8=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.43/32
+
+peer: /TObuw2cJX55uVs2ohsem7ASiv5xjJuhSgQNmd4AtCs=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.44/32
+
+peer: 2YCe8Fn7VZNqd1qjgiRbL/oYhNBSY5Q2e1a+PVUnmRs=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.45/32
+
+peer: kd5AN1DfW3IW1SjZ5nLZeREVwV6ZjeyhxAOUTYJw8ng=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.46/32
+
+peer: nWpSZnKt9rKjLUtKrzbp1enMdoyLG+q/7kcKqrec2hQ=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.47/32
+
+peer: 54cjxXiI2taDCGR/2EsP+mcv6oY+2mMy84+JJudGyxg=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.48/32
+
+peer: WWqXg8QgoB875oltevvO86LGH0M4vCJWWA1kcF2vzHA=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.49/32
+
+peer: F8Gckq+xhNs8H9NssqkmL8TJFq7Is5ksrVbXTv3jTWo=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.50/32
+
+peer: 01Sw5+KukgFyGaHQ6gnz12RupUQz2IdjU+3Xz6wZZXw=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.51/32
+
+peer: bBrDCLGe/R5urm3zeeNkstAWyJWi5D/sqsnLOMrkiSA=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.52/32
+
+peer: tOr9eCkvsA1ryiq518miyX562cRUnAWg+xxSeGwnZDk=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.53/32
+
+peer: pxnA8eAwuhnDGi0yrgtER/1NhOHlP3tmmRw4OwsCkS4=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.54/32
+
+peer: SThQBEH9hILRXf7wpuLdtfI+tGT7iIn81pgWbzPTEQQ=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.55/32
+
+peer: SLWqbZfPkZonQPkZa5aHFlyI2bCSz5elMlKmXYW4yCM=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.56/32
+
+peer: tvI0/6lSxVHYLQ1HEJfgDRwG1JWC7+wsiAXrGcHAByQ=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.57/32
+
+peer: 6LBoF7kwGZ+Dgg3LhMCLmgblz2hv4ksORGancXp7+lY=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.58/32
+
+peer: 986ksdGzW1pxa3lBGAMUvPJlfAtzven/vAGudV+6vWQ=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.59/32
+
+peer: 9FB6lSu3J5ltNUWfo/hVex7jnxDJnbVZHD1C8AT4am8=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.60/32
+
+peer: U5U1gEbvAktszMwVrBMNc/JGxu8qAag75/uAAZ9TdiI=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.61/32
+
+peer: HTW2TcUkR6Mc0FYG8+8ce5I+vJpmn3UD3c4/YZ/k3Bw=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.62/32
+
+peer: GqP8w6s2ORVAn6NC7SNatnFl5+MrWZ0TvOZ3QOqzMyc=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.63/32
+
+peer: QNMCsD5E8RdEg2wcwv7sdrhxDtGqfMc3sSjiL6R7PjY=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.64/32
+
+peer: UgGKcCs0TgTJQyliU7lcTs72hkQu1eost2mI0/FNIRs=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.65/32
+
+peer: MgheMgjgnvfeCdHrKlCExnDH7vaOr5d8gyPlozxRsnM=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.66/32
+
+peer: XEzjzGMxt5HA7/LAyaJVIoSuLgUPPN09TKGFlb8w+Us=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.67/32
+
+peer: UEAhRHuGfO+jHwrT0lbdj9ksdBiDiD7v61OxKMB+uRg=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.68/32
+
+peer: gaDD+e7BKYNuA0RLlonDHOswZlxbaAYdDNcn0UZ0YH8=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.69/32
+
+peer: anh1H986TYtR3tDGrFKD1caYvfxDMFLl4U/fsOZJ4wE=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.70/32
+
+peer: qvZBl9k6ei01MQ5Q1UGbgG+LdJ36wTxQmadyxMnAq1M=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.71/32
+
+peer: s67H1gSx5cvxHbQ44n+/ivoxLPR1m1eoPkwM2YGC0zI=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.72/32
+
+peer: SE2Zqj4GiSxyuAsNaOLFIsGJI8dxHMA7+qBCzw2CRQ8=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.73/32
+
+peer: zIv11NHYCm7HWbM05CaLe3hh7DBSIX8SO24Eu/r57ys=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.74/32
+
+peer: I3fY9xrfbw2F/TGtak4PviVe7XydeN9A9Ig7GM+F0mw=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.75/32
+
+peer: q7MlYMKApJ49ds/Aokkbjm8N93BAIuIXviqwHWr1jDk=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.76/32
+
+peer: elhCF6LprCwE2vzGkg0CODzKqg3Nbt+xZ605rGiS+Wo=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.77/32
+
+peer: c9vlpP5l9z5Nd1JK/7xopEQJPBBHOUmGEcU3Dk0cnU8=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.78/32
+
+peer: NH5/J04HOREkquoreWlKx7q/EOxdyPrkN+nYqLybGFU=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.81/32
+
+peer: hfUcXmoX0qQdkhrRs7yiDymidUYvr+GYn3HSdxKF7ik=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.82/32
+
+peer: SzCDZGv6xBp1Dmd6zcmGn8i2LyUM5YL4ao7iZBDt9xQ=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.83/32
+
+peer: 1oV3z9iyZP9NfyYNWNDvV1EHhjk18TvStIPT5AfHcHw=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.89/32
+
+peer: U+OAYuu1oG025hnwEwr+58wf4PlwOjUm3irUHRsAbxc=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.90/32
+
+peer: KgdfwGDq3yGU2q8tsCPcszucknJSSaO0mS7kQQ5mS0k=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.91/32
+
+peer: GhbnxhO2f6ZGaTAApJEpTvKsQqqpO0XMdGJpeut+eRU=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.92/32
+
+peer: 7jQxyqKLE8NSJlHbeLnyTDHL6mR2gkFT68vnBf9JsUo=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.93/32
+
+peer: b19Ouu2R54Q28UatE6tmjEzyCVUxJhjOKs6AzH/Flnc=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.94/32
+
+peer: II+FwFgRMkzrZSyQCn2zX5HYP+tcT3S8rQ+vt0kj71Q=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.95/32
+
+peer: mzm4JPPIoiVVNGZd4f8cXV7CuIu4h6jr9grXfIu/FCo=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.96/32
+
+peer: Ssn0JrmWV86QZfgxFCzYkTXmeVDnoxvp9dekjDmwKgY=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.97/32
+
+peer: okSw5MQ07aW+y+Uo5bBnV4gEFbsK0wc2hECcuD8kiFM=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.98/32
+
+peer: OYa+Mev5gjtFwsCrZCaIja1mFIfN0bPC9NNqTjF/fy4=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.99/32
+
+peer: 0uB3hZHnesxgYkSyyG7WTtGJpPusa5OHvwJ8HfeMjSQ=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.100/32
+
+peer: K4sPtapmJX5+bXB2vbgts++PD8W9PSCb68sW30OMXDU=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.102/32
+
+peer: 2iEGKk6z49gJ4x2v/VtXwe5UcalEcM0sBfFtPhnTYlc=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.103/32
+
+peer: uuG1vE9xpFaRHLknSmAOOou7lb2sURMXoNoM3IDzfHQ=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.104/32
+
+peer: IQXJvdWpLt9tcPt3zbnwCuQ3KCIb16SoxniaW3EImQA=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.105/32
+
+peer: gJwF9zRBrCz1ao465t3ZfVJ1J93mFHIGkSTYztyAMnI=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.106/32
+
+peer: oLWA7SC8W/noWZInnEH1GgaW8nDLhzjr+jPvsE4i53k=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.107/32
+
+peer: eySP347/7Ar+L0zEfnTd0CaeKMMxLnMz3ed6QAULax0=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.108/32
+
+peer: of76Kgko05Z0DMjjpPXgRqg3MIjO6SY25UIQUSbX7Ag=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.109/32
+
+peer: /3b6raRYO2GToq1h9CZvRtHeLYvrMJJDXGxaad5jFw4=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.110/32
+
+peer: 60LMd1s65a5IsTEiUkMDASVWnBRozVOUnQNRjPjuWGc=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.111/32
+
+peer: jIm44rvtZGJBqb7JVpnA+qDPm+wDPZHDd34m13lanQ0=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.112/32
+
+peer: +im4RGxrH9Zrwazuw3sLb3c/BvU5Y8MOdsi7VqGTSgs=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.113/32
+
+peer: /+FQ2OVSTrv9IU7+ZKSURVQKc8BsM+esAYcyV3RYiXA=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.114/32
+
+peer: rVBk/Dy/LFm2cJX9t7e0fbgdHdp6H/lHugoKzYOKbno=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.115/32
+
+peer: YV7tjd0XxE6qYebXu47vpl0Y2iYopH26LBZRPgDSfxM=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.116/32
+
+peer: d/6+dJklAr5A4nGLGknjOK+R41yNAC61ZPZAvAEO2hA=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.117/32
+
+peer: woTLFEWTTXCbzPQBYXni6V8msW05kcSbTytKAwjkqgA=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.118/32
+
+peer: EUNlK2LjAaIt0HFuV0yXgB+9iM6yUvnVHXpKTr6bhBE=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.119/32
+
+peer: DjX3z3AxAr+6xyCB1ArJRuVrPAzmN6f0ojLt6GDY4j4=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.120/32
+
+peer: l4kAiQBqonlmMIwfYBv5GZVtqJMgNxQqO5kyOtgR4Ro=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.121/32
+
+peer: V8YHvtCdQs88kJG2Rn3BbyG3slOS/PTJnLK49XhgvVc=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.122/32
+
+peer: m29rsvNQHvomqbWUPudY76r5k5hlrr9KxSEZZNpbtB4=
+  preshared key: (hidden)
+  allowed ips: 10.8.0.123/32
+"

@@ -324,7 +324,7 @@ class Exporter:
         self.validate()
         if self.config['ops_mode'] == 'http':
             # Start up the server to expose the metrics.
-            start_http_server(self.config['http_port'], registry=self.registry)
+            start_http_server(port=self.config['http_port'], addr=self.config['addr'], registry=self.registry)
         while True:
             try:
                 self.update_metrics()
@@ -348,6 +348,7 @@ if __name__ == '__main__':
     exporter_config = {
         'scrape_interval': config('AWG_EXPORTER_SCRAPE_INTERVAL', default=60),
         'http_port': config('AWG_EXPORTER_HTTP_PORT', default=9351),
+        'addr': config('AWG_EXPORTER_LISTEN_ADDR', default='0.0.0.0'),
         'metrics_file': config('AWG_EXPORTER_METRICS_FILE', default='/tmp/prometheus/awg.prom'),
         'ops_mode': config('AWG_EXPORTER_OPS_MODE', default='http'),
         'grafana_write_url': config('AWG_GRAFANA_WRITE_URL', default=''),
