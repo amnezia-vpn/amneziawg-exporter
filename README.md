@@ -33,6 +33,7 @@ The following environment variables can be used to configure amneziawg-exporter.
 |--------------------------------------|-----------------------------|-------------------------------------------------------------------------|
 | AWG_EXPORTER_SCRAPE_INTERVAL         | 60                          | Interval for scraping WireGuard metrics (for the `http` mode).          |
 | AWG_EXPORTER_HTTP_PORT               | 9351                        | Port for HTTP service.                                                  |
+| AWG_EXPORTER_LISTEN_ADDR             | 0.0.0.0                     | Listen address for HTTP service.                                        |
 | AWG_EXPORTER_METRICS_FILE            | /tmp/prometheus/awg.prom    | Path to the metrics file for Node exporter textfile collector.          |
 | AWG_EXPORTER_OPS_MODE                | http                        | Operation mode for the exporter (`http`, `metricsfile`, `oneshot` or `grafana_cloud`). |
 | AWG_EXPORTER_AWG_SHOW_EXEC           | "awg show"                  | Command to run the `awg show` command.                                  |
