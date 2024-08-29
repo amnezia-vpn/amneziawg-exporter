@@ -101,10 +101,10 @@ class AwgShowWrapper:
             datetime: The exact date and time calculated from the time string.
         """
         patterns = {
-            'days': r'(\d+) days?',
-            'hours': r'(\d+) hours?',
-            'minutes': r'(\d+) minutes?',
-            'seconds': r'(\d+) seconds?'
+            'days': r'(\d+) day?',
+            'hours': r'(\d+) hour?',
+            'minutes': r'(\d+) minute?',
+            'seconds': r'(\d+) second?'
         }
         components = {'days': 0, 'hours': 0, 'minutes': 0, 'seconds': 0}
         for key, pattern in patterns.items():
