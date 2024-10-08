@@ -1,6 +1,7 @@
-FROM python:3.12.5-slim-bookworm AS exporter
-ARG DEBIAN_FRONTEND=noninteractive
-RUN pip3 install --no-cache-dir \
+FROM ubuntu:24.04 AS exporter
+RUN apt-get update && \
+    apt-get install python3-pip -y && \
+    pip3 install --no-cache-dir --break-system-packages \
     prometheus_client==0.20.0 \
     python-decouple==3.8 \
     requests==2.32.3
