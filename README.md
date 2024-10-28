@@ -36,17 +36,20 @@ The following environment variables can be used to configure amneziawg-exporter.
 | AWG_EXPORTER_LISTEN_ADDR             | 0.0.0.0                     | Listen address for HTTP service.                                        |
 | AWG_EXPORTER_METRICS_FILE            | /tmp/prometheus/awg.prom    | Path to the metrics file for Node exporter textfile collector.          |
 | AWG_EXPORTER_OPS_MODE                | http                        | Operation mode for the exporter (`http`, `metricsfile`, `oneshot` or `grafana_cloud`). |
-| AWG_EXPORTER_AWG_SHOW_EXEC           | "awg show"                  | Command to run the `awg show` command.                                  |
+| AWG_EXPORTER_AWG_SHOW_EXEC           | "awg show all dump"         | Command to run the `awg show` command.                                  |
 | AWG_GRAFANA_WRITE_URL                |                             | URL for sending metrics to Grafana Cloud (for `grafana_cloud` mode).    |
 | AWG_GRAFANA_WRITE_TOKEN              |                             | Authorization token for Grafana Cloud (for `grafana_cloud` mode).       |
 | AWG_GRAFANA_ADDITIONAL_LABELS        |                             | Additional labels to add when sending metrics to Grafana Cloud.         |
-
+| AWG_EXPORTER_REDIS_HOST              | localhost                   | Redis server host to store peers data                                   |
+| AWG_EXPORTER_REDIS_PORT              | 6379                        | Redis server port to store peers data                                   |
+| AWG_EXPORTER_REDIS_DB                | 0                           | Redis server db number to store peers data                              |
 ## Metrics
 
 | Metric name                          | Labels               | Description                                                                 |
 |--------------------------------------|----------------------|-----------------------------------------------------------------------------|
 | awg_current_online                   |                      | Current number of online users.                                             |
 | awg_dau                              |                      | Daily active users.                                                         |
+| awg_mau                              |                      | Monthly active users.                                                       |
 | awg_status                           |                      | Exporter status. 1 - OK, 0 - not OK                                         |
 
 ## Docker image
@@ -60,11 +63,14 @@ You can use example [docker-compose.yml](docker-compose.yml) with Docker Compose
 
 ```sh
 # docker compose up -d
-[+] Running 1/1
- ✔ Container amneziawg-exporter  Started                                                                                                                  0.2s 
+[+] Running 3/3
+ ✔ Network amneziawg-exporter_default  Created          0.2s
+ ✔ Container amneziawg-exporter-redis  Started          0.1s
+ ✔ Container amneziawg-exporter        Started          0.1s
 # docker compose ps
 NAME                 IMAGE                                          COMMAND                         SERVICE              CREATED          STATUS          PORTS
-amneziawg-exporter   amneziavpn/amneziawg-exporter:latest           "/usr/bin/amneziawg-exporter"   amneziawg-exporter   23 seconds ago   Up 23 seconds
+amneziawg-exporter         amneziavpn/amneziawg-exporter:latest   "/exporter.py"           amneziawg-exporter         15 seconds ago   Up 14 seconds   0.0.0.0:9351->9351/tcp, :::9351->9351/tcp
+amneziawg-exporter-redis   redis:alpine                           "docker-entrypoint.s…"   amneziawg-exporter-redis   15 seconds ago   Up 14 seconds   6379/tcp
 ```
 
 > [!TIP]

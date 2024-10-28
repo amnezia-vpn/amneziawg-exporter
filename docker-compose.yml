@@ -1,15 +1,24 @@
 services:
+
   amneziawg-exporter:
     image: amneziavpn/amneziawg-exporter:latest
     build: .
     container_name: amneziawg-exporter
-    cap_add:
-      - NET_ADMIN
-    security_opt:
-      - no-new-privileges=true
-    network_mode: host
-    environment:
-      AWG_EXPORTER_OPS_MODE: metricsfile
+    hostname: amneziawg-exporter
     volumes:
       - /usr/bin/awg:/usr/bin/awg
-      - /tmp/prometheus/:/tmp/prometheus/
+    environment:
+      AWG_EXPORTER_REDIS_HOST: amneziawg-exporter-redis
+    ports:
+      - 9351:9351
+
+  amneziawg-exporter-redis:
+    image: redis:alpine
+    container_name: amneziawg-exporter-redis
+    restart: always
+    command: ["redis-server", "/etc/redis/redis.conf"]
+    volumes:
+      - ./redis.conf:/etc/redis/redis.conf
+      - ./redis-data:/data
+    ports:
+      - "6379:6379"
