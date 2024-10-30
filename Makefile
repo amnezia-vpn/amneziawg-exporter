@@ -1,6 +1,6 @@
 .PHONY: all ci docker_build docker_retag docker_login docker_push
 
-VERSION            := 2.5.0
+VERSION            := 3.0.0
 PROJECT_NAME       ?= amneziavpn/amneziawg-exporter
 DOCKER_BUILDKIT    ?= 1
 DOCKER_REGISTRY    ?= docker.io
@@ -16,7 +16,7 @@ ci: DOCKER_TAG=$(VERSION)
 ci: docker_build docker_push
 
 docker_build:
-	docker build . -t $(DOCKER_IMAGE):$(DOCKER_TAG) --target exporter --build-arg VERSION=$(VERSION)
+	docker build . -t $(DOCKER_IMAGE):$(DOCKER_TAG) --build-arg VERSION=$(VERSION)
 
 docker_retag:
 	docker tag $(DOCKER_IMAGE):$(DOCKER_TAG) $(DOCKER_IMAGE):latest

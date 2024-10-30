@@ -3,10 +3,10 @@
 import logging
 import sys
 import time
-import re
 import subprocess
 import signal
 import argparse
+import redis
 from decouple import Config, RepositoryEnv, RepositoryEmpty
 from datetime import datetime, timedelta
 from prometheus_client import start_http_server, CollectorRegistry, Gauge, write_to_textfile, generate_latest
@@ -78,44 +78,101 @@ class Decouwrapper:
         return self.__config.get(*args, **kwargs)
 
 
+class PersistenceWrapper:
+    """
+    A wrapper for interacting with Redis to maintain active user statistics.
+
+    Attributes:
+        connection (redis.Redis): The Redis connection object.
+        mau (int): Monthly active users, calculated based on recent activity.
+        dau (int): Daily active users, calculated based on recent activity.
+        online (int): Users currently online (last 5 minutes).
+    """
+
+    FIVE_MINUTES = timedelta(minutes=5)
+    ONE_DAY = timedelta(days=1)
+    ONE_MONTH = timedelta(days=30)
+
+    def __init__(self, host: str, port: int, db: int):
+        """
+        Initializes the Redis connection and user activity counters.
+
+        Args:
+            host (str): Redis server hostname. Defaults to 'localhost'.
+            port (int): Redis server port. Defaults to 6379.
+            db (int): Redis database number. Defaults to 0.
+        """
+        self.log = MyLogger(self.__class__.__name__).logger
+        self.connection = redis.Redis(host=host, port=port, db=db, decode_responses=True)
+        self.log.info('Redis storage initialized')
+        self.dau: int = 0
+        self.mau: int = 0
+        self.mau_abs: int = 0
+        self.online: int = 0
+        self.current_month: str = ''
+
+    def update_peer(self, peer: str, handshake_time: int) -> None:
+        """
+        Updates the last handshake time for a specific peer in Redis.
+
+        Args:
+            peer (str): Unique identifier for the peer.
+            handshake_time (int): Timestamp of the handshake event.
+        """
+        try:
+            self.connection.set(peer, handshake_time)
+        except redis.RedisError as e:
+            self.log.error(f"Error updating peer {peer}: {e}")
+
+    def recalculate(self) -> None:
+        """
+        Recalculates the MAU, DAU, and online user counts by iterating over all peer entries
+        in Redis and comparing their handshake times to current time thresholds.
+
+        MAU (Monthly Active Users): Users active within the last 30 days.
+        DAU (Daily Active Users): Users active within the last 24 hours.
+        Online: Users active within the last 5 minutes.
+        """
+        try:
+            now = datetime.now()
+            five_minutes_ago = (now - self.FIVE_MINUTES).timestamp()
+            day_ago = (now - self.ONE_DAY).timestamp()
+            month_ago = (now - self.ONE_MONTH).timestamp()
+            first_day_of_month = datetime(now.year, now.month, 1).timestamp()
+            mau_abs_count = 0
+            mau_count = 0
+            dau_count = 0
+            online_count = 0
+            for peer in self.connection.keys():
+                handshake_time = self.connection.get(peer)
+                if handshake_time:
+                    handshake_time = float(handshake_time)
+                    if handshake_time >= first_day_of_month:
+                        mau_abs_count += 1
+                    if handshake_time >= month_ago:
+                        mau_count += 1
+                    if handshake_time >= day_ago:
+                        dau_count += 1
+                    if handshake_time >= five_minutes_ago:
+                        online_count += 1
+            self.mau_abs = mau_abs_count
+            self.mau = mau_count
+            self.dau = dau_count
+            self.online = online_count
+            self.current_month = f"{now.strftime('%Y')}-{now.strftime('%m')}"
+        except redis.RedisError as e:
+            self.log.error(f"Error recalculating active users: {e}")
+
+
 class AwgShowWrapper:
     """
     A wrapper class providing utility methods for parsing output from the 'awg show' command.
 
-    This class includes static methods for parsing time strings, converting string representations of byte sizes
-    to integer byte counts, parsing text blocks into structured data, and running 'awg show' commands.
+    This class includes static methods for parsing text blocks into structured data and running 'awg show' commands.
 
     Attributes:
         None
     """
-
-    @staticmethod
-    def parse_time_string(time_string: str) -> datetime:
-        """
-        Parse a time string from `awg show` output and return the corresponding datetime.
-
-        Args:
-            time_string (str): The time string to parse.
-
-        Returns:
-            datetime: The exact date and time calculated from the time string.
-        """
-        patterns = {
-            'days': r'(\d+) days?',
-            'hours': r'(\d+) hours?',
-            'minutes': r'(\d+) minutes?',
-            'seconds': r'(\d+) seconds?'
-        }
-        components = {'days': 0, 'hours': 0, 'minutes': 0, 'seconds': 0}
-        for key, pattern in patterns.items():
-            match = re.search(pattern, time_string)
-            if match:
-                components[key] = int(match.group(1))
-        delta = timedelta(days=components['days'],
-                          hours=components['hours'],
-                          minutes=components['minutes'],
-                          seconds=components['seconds'])
-        return datetime.now() - delta
 
     @staticmethod
     def parse(text_block: str) -> list:
@@ -124,25 +181,17 @@ class AwgShowWrapper:
 
         Args:
             text_block (str): The text block to parse.
-            peers (list): A list to store parsed peer data.
         """
+        lines = text_block.strip().splitlines()
         peers = []
-        current_peer = {}
-        for line in text_block.split('\n'):
-            if line.strip():
-                key, value = line.split(': ', 1)
-                key = key.strip().replace(" ", "_")
-                value = value.strip()
-                if key == 'latest_handshake':
-                    current_peer[key] = AwgShowWrapper.parse_time_string(value)
-                if key == 'peer':
-                    current_peer[key] = value
-            else:
-                if current_peer.get('peer'):
-                    peers.append(current_peer)
-                current_peer = {}
-        if current_peer:
-            peers.append(current_peer)
+        for line in lines[1:]:  # exclude 1st line with host data
+            parts = line.split()
+            current_peer = {}
+            if len(parts) >= 6:
+                current_peer['peer'] = parts[1]
+                current_peer['latest_handshake'] = parts[5]
+                peers.append(current_peer)
+
         return peers
 
     @staticmethod
@@ -174,79 +223,55 @@ class AwgShowWrapper:
 
 class Exporter:
     """
-    A Prometheus exporter for collecting Amnezia WG client connection metrics.
-
-    This class initializes the exporter, updates metrics periodically,
-    and optionally exposes them via an HTTP server or writes them to a file.
-
-    Args:
-        config (dict): A dictionary containing configuration options.
+    A class to handle exporting of metrics to Grafana Cloud or local storage based on configuration settings.
 
     Attributes:
-        config (dict): A dictionary containing configuration options.
-        awg_show_command (list): A list containing the command to run the `awg show` command.
-        log (Logger): A logger object for logging messages.
-        peers (list): A list to store parsed peer data.
-        registry (CollectorRegistry): A registry for registering metrics.
-        current_online_metric (Gauge): A Prometheus gauge for the current number of online users.
-        dau_metric (Gauge): A Prometheus gauge for daily active users.
-        status (Gauge): A Prometheus gauge for the exporter's status.
-
-    Methods:
-        sigterm_handler: Handles the SIGTERM signal.
-        sigint_handler: Handles the SIGINT signal.
-        write_metrics_to_file: Writes metrics to a file.
-        update_metrics: Updates metrics based on `awg show` output.
-        send_to_grafana_cloud: Sends metrics to Grafana Cloud.
-        validate: Validates the configuration before starting the exporter.
-        main_loop: Starts the main loop for updating metrics periodically.
+        config (dict): Configuration parameters for the exporter.
+        registry (CollectorRegistry): Registry to store Prometheus metrics.
+        storage (PersistenceWrapper): Redis storage wrapper to handle peer data persistence.
+        log (Logger): Logger for monitoring and debugging.
+        current_online_metric (Gauge): Gauge metric for tracking current online users.
+        dau_metric (Gauge): Gauge metric for daily active users.
+        mau_metric (Gauge): Gauge metric for monthly active users.
+        status (Gauge): Gauge metric for exporter status.
     """
+
     def __init__(self, config: dict) -> None:
+        """
+        Initializes the Exporter instance with the given configuration.
+
+        Args:
+            config (dict): Dictionary containing exporter configuration.
+        """
         self.config = config
         self.awg_show_command = self.config['awg_executable'].split(' ')
         self.log = MyLogger(self.__class__.__name__).logger
         self.registry = CollectorRegistry()
+        self.storage = PersistenceWrapper(self.config['redis_host'], self.config['redis_port'], self.config['redis_db'])
         self.current_online_metric = Gauge('awg_current_online', 'Current online users', registry=self.registry)
         self.dau_metric = Gauge('awg_dau', 'Daily active users', registry=self.registry)
-        self.status = Gauge('awg_status',
-                            'Exporter status. 1 - OK, 0 - not OK',
-                            registry=self.registry)
+        self.mau_metric = Gauge('awg_mau', 'Monthly active users', registry=self.registry)
+        self.mau_abs_metric = Gauge('awg_mau_abs', 'Monthly active users (Absolute)', ['month'], registry=self.registry)
+        self.status = Gauge('awg_status', 'Exporter status. 1 - OK, 0 - not OK', registry=self.registry)
         self.log.info('AmneziaWG exporter initialized')
 
-    def sigterm_handler(self, sig, frame):
+    def sigterm_handler(self, sig, frame) -> None:
         """
-        Handles the SIGTERM signal to gracefully shut down the exporter.
-
-        Args:
-            sig (int): The signal number.
-            frame: The current stack frame.
+        Handles SIGTERM signal for graceful shutdown.
         """
         self.log.info('SIGTERM received, preparing to shut down...')
         sys.exit(0)
 
-    def sigint_handler(self, sig, frame):
+    def sigint_handler(self, sig, frame) -> None:
         """
-        Handles the SIGINT signal (typically Ctrl+C) to gracefully shut down the exporter.
-
-        Args:
-            sig (int): The signal number.
-            frame: The current stack frame.
+        Handles SIGINT (Ctrl+C) signal for graceful shutdown.
         """
         self.log.info('SIGINT (Ctrl+C) received, preparing to shut down...')
         sys.exit(0)
 
-    def write_metrics_to_file(self, metrics_file: str):
+    def update_metrics(self) -> None:
         """
-        Writes metrics to a specified file.
-
-        Args:
-            metrics_file (str): The path to the metrics file.
-        """
-        write_to_textfile(metrics_file, self.registry)
-
-    def update_metrics(self):
-        """
-        Updates Prometheus metrics based on `awg show` command output.
+        Updates and recalculates metrics for online, daily, and monthly active users.
         """
         try:
             awg_show_result = AwgShowWrapper.run_bin(self.awg_show_command)
@@ -255,31 +280,22 @@ class Exporter:
                 self.status.set(0)
                 self.current_online_metric.set(0)
                 return
-            current_online = 0
-            dau = 0
             for peer in peers:
-                if peer.get('latest_handshake') is None:
+                if peer.get('latest_handshake') == "0":
                     continue
-                if peer['latest_handshake'].date() == datetime.now().date():
-                    dau += 1
-                delta_time = datetime.now() - peer['latest_handshake']
-                five_minutes = timedelta(minutes=5)
-                if delta_time < five_minutes:
-                    current_online += 1
-            self.dau_metric.set(dau)
-            self.current_online_metric.set(current_online)
+                self.storage.update_peer(peer['peer'], peer['latest_handshake'])
+            self.storage.recalculate()
+            self.dau_metric.set(self.storage.dau)
+            self.mau_metric.set(self.storage.mau)
+            self.mau_abs_metric.labels(self.storage.current_month).set(self.storage.mau_abs)
+            self.current_online_metric.set(self.storage.online)
             self.status.set(1)
         except Exception as e:
             self.log.error(f"Error updating metrics: {e}")
 
-    def send_to_grafana_cloud(self):
+    def send_to_grafana_cloud(self) -> None:
         """
-        Sends the collected metrics to Grafana Cloud.
-
-        Metrics are sent using a custom format expected by Grafana Cloud.
-
-        Raises:
-            RuntimeError: If the request to Grafana Cloud fails.
+        Sends collected metrics to Grafana Cloud.
         """
         metrics = generate_latest(self.registry)
         for family in text_string_to_metric_families(metrics.decode('utf-8')):
@@ -297,11 +313,9 @@ class Exporter:
                 if response.status_code != 204:
                     self.log.info(f"Failed to send metrics to Grafana Cloud: {response.status_code}, {response.text}")
 
-    def validate(self):
+    def validate(self) -> None:
         """
-        Validates the exporter configuration.
-
-        Ensures that necessary configuration options are set, especially for Grafana Cloud mode.
+        Validates the configuration, ensuring required fields are set for Grafana Cloud mode.
         """
         if self.config['ops_mode'] == 'grafana_cloud':
             if self.config['grafana_write_url'] == '':
@@ -311,14 +325,8 @@ class Exporter:
                 self.log.error('AWG_GRAFANA_WRITE_TOKEN variable must be set!')
                 sys.exit(1)
 
-    def main_loop(self):
-        """
-        Starts the main loop for updating metrics periodically based on the configured operation mode.
-
-        The loop can run indefinitely, or exit after a single update if in 'oneshot' mode.
-        """
-        self.log.info('Start main loop')
-        self.log.info(f"Ops mode: {self.config['ops_mode']}")
+    def main_loop(self) -> None:
+        self.log.info('Starting main loop')
         signal.signal(signal.SIGTERM, self.sigterm_handler)
         signal.signal(signal.SIGINT, self.sigint_handler)
         self.validate()
@@ -329,7 +337,7 @@ class Exporter:
             try:
                 self.update_metrics()
                 if self.config['ops_mode'] in ['metricsfile', 'oneshot']:
-                    self.write_metrics_to_file(self.config['metrics_file'])
+                    write_to_textfile(self.config['metrics_file'], self.registry)
                 if self.config['ops_mode'] == 'oneshot':
                     self.log.info("Exiting after successful metrics fetch...")
                     break
@@ -354,7 +362,10 @@ if __name__ == '__main__':
         'grafana_write_url': config('AWG_GRAFANA_WRITE_URL', default=''),
         'grafana_write_token': config('AWG_GRAFANA_WRITE_TOKEN', default=''),
         'grafana_additional_labels': config('AWG_GRAFANA_ADDITIONAL_LABELS', default=''),
-        'awg_executable': config('AWG_EXPORTER_AWG_SHOW_EXEC', default='awg show')
+        'awg_executable': config('AWG_EXPORTER_AWG_SHOW_EXEC', default='awg show all dump'),
+        'redis_host': config('AWG_EXPORTER_REDIS_HOST', default='localhost'),
+        'redis_port': config('AWG_EXPORTER_REDIS_PORT', default=6379),
+        'redis_db': config('AWG_EXPORTER_REDIS_DB', default=0)
     }
     log.info('Exporter config:')
     for key, value in exporter_config.items():
