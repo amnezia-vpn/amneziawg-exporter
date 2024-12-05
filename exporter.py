@@ -188,7 +188,7 @@ class AwgShowWrapper:
             parts = line.split()
             current_peer = {}
             if len(parts) >= 6:
-                current_peer['peer'] = parts[1]
+                current_peer['peer'] = parts[4]
                 current_peer['latest_handshake'] = parts[5]
                 peers.append(current_peer)
 
