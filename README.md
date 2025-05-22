@@ -37,9 +37,7 @@ The following environment variables can be used to configure amneziawg-exporter.
 | AWG_EXPORTER_METRICS_FILE            | /tmp/prometheus/awg.prom    | Path to the metrics file for Node exporter textfile collector.          |
 | AWG_EXPORTER_OPS_MODE                | http                        | Operation mode for the exporter (`http`, `metricsfile`, `oneshot` or `grafana_cloud`). |
 | AWG_EXPORTER_AWG_SHOW_EXEC           | "awg show all dump"         | Command to run the `awg show` command.                                  |
-| AWG_GRAFANA_WRITE_URL                |                             | URL for sending metrics to Grafana Cloud (for `grafana_cloud` mode).    |
-| AWG_GRAFANA_WRITE_TOKEN              |                             | Authorization token for Grafana Cloud (for `grafana_cloud` mode).       |
-| AWG_GRAFANA_ADDITIONAL_LABELS        |                             | Additional labels to add when sending metrics to Grafana Cloud.         |
+| AWG_EXPORTER_LABEL_*                 |                             | Additional labels to add to each metric (`AWG_EXPORTER_LABEL_(.*)` - lowercase key by this regexp) |
 | AWG_EXPORTER_REDIS_HOST              | localhost                   | Redis server host to store peers data                                   |
 | AWG_EXPORTER_REDIS_PORT              | 6379                        | Redis server port to store peers data                                   |
 | AWG_EXPORTER_REDIS_DB                | 0                           | Redis server db number to store peers data                              |
