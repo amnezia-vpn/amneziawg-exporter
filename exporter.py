@@ -265,7 +265,10 @@ class Exporter:
 
     def set_metric(self, name):
         if name != 'status':
-            value = self.storage[name]
+            try:
+                value = self.storage[name]
+            except Exception:
+                value = 0
         else:
             value = 1
         if self.has_labels:
@@ -285,10 +288,6 @@ class Exporter:
         """
         output = AwgShowWrapper.run_bin(self.awg_show_command)
         peers = AwgShowWrapper.parse(output)
-        if not peers:
-            self.metrics['status'].labels(**self.config.extra_labels).set(0)
-            self.metrics['online'].labels(**self.config.extra_labels).set(0)
-            return
         for peer in peers:
             if peer.get('latest_handshake') != '0':
                 self.storage.update_peer(peer['peer'], peer['latest_handshake'])
